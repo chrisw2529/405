@@ -10,7 +10,6 @@ public class Proj2{
     if(args.length != 0){
       String arrayFile = args[0];
       int[] sequence = buildArray(arrayFile);
-      printArray(sequence);
       findSeq(sequence);
     }
     else{
@@ -18,7 +17,11 @@ public class Proj2{
       System.exit(0);
     }
   }
-
+/*findSeq
+* takes in an array and finds longest increacing subsequence
+* prints the length of the sequnce and the actual sequence
+*
+*/
   private static void findSeq(int[] seq){
     int[] longest = new int[seq.length];
     for (int i = 0; i<seq.length ; i++) {
@@ -32,38 +35,35 @@ public class Proj2{
         }
       }
     }
-    printArray(longest);
-
     int length = longest[0];
     for(int i=1;i<longest.length;i++){
       if(longest[i] > length){
 	       length = longest[i];
 	    }
     }
-    System.out.println("length " + length);
 
     int next = 1;
     ArrayList<Integer> toPrint = new ArrayList<Integer>();
-    for (int i = 0; i<longest.length -1; i++ ){
-      System.out.println("i: "+ i +" longest[i]: " + longest[i] + " longest[i+1]: "+ longest[i+1] +" next: " + next);
-      if(longest[i] + 1 == longest[i+1] && next == longest[i]){
+    for (int i = 0; i<longest.length; i++ ){
+      if(next == longest[i]){
         toPrint.add(seq[i]);
         next++;
+        if(next - 1 == length){
+          break;
+        }
       }
-      // else if(longest[i] == next){
-      //   toPrint.remove(toPrint.size() -1 );
-      //   toPrint.add(seq[i]);
-      // }
-    }
-    if(longest[longest.length-2] + 1 == longest[longest.length-1] && longest[longest.length-1] == next){
-      toPrint.add(seq[longest.length-1]);
-      next++;
+      else if(longest[i] == next - 1 ){
+        toPrint.remove(toPrint.size() -1 );
+        toPrint.add(seq[i]);
+      }
+
     }
     System.out.println("the longest increasing sub-sequence is of length " +  length);
 
-    //System.out.println("The sequence is: " + toPrint);
-
-
+    for (int i = 0; i < toPrint.size()  ; i++) {
+      System.out.print(toPrint.get(i) + " ");
+    }
+    System.out.println();
   }
 
   /*printArray

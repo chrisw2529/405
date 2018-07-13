@@ -35,32 +35,32 @@ public class Proj2{
         }
       }
     }
+
+
+    //finds the index of the last element in the LISS
     int length = longest[0];
+    int maxIndex = -1;
     for(int i=1;i<longest.length;i++){
       if(longest[i] > length){
 	       length = longest[i];
+         maxIndex = i;
 	    }
     }
 
-    int next = 1;
-    ArrayList<Integer> toPrint = new ArrayList<Integer>();
-    for (int i = 0; i<longest.length; i++ ){
-      if(next == longest[i]){
-        toPrint.add(seq[i]);
-        next++;
-        if(next - 1 == length){
-          break;
-        }
-      }
-      else if(longest[i] == next - 1 ){
-        toPrint.remove(toPrint.size() -1 );
-        toPrint.add(seq[i]);
-      }
 
+    //constructs the LISS array
+    ArrayList<Integer> toPrint = new ArrayList<Integer>();
+    toPrint.add(seq[maxIndex]);
+    for(int i = maxIndex -1 ; i >= 0 ; i--){
+      if(longest[maxIndex] == longest[i] + 1 && seq[maxIndex] > seq[i]){
+        toPrint.add(seq[i]);
+        maxIndex = i;
+      }
     }
+
     System.out.println("the longest increasing sub-sequence is of length " +  length);
 
-    for (int i = 0; i < toPrint.size()  ; i++) {
+    for (int i = toPrint.size() -1; i >= 0   ; i--) {
       System.out.print(toPrint.get(i) + " ");
     }
     System.out.println();

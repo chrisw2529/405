@@ -260,8 +260,11 @@ public class HW1{
     while(hl.hasNextLine()){
       String trimer = hl.nextLine().trim().replaceAll(" +", " ");
       String[] line = trimer.split("\\s");
-      length = line.length;
-      height++;
+      if(line.length != 1){
+        length = line.length;
+        height++;
+      }
+
     }
     int[][] matrix = new int[height][length];
     //puts values into matrix
@@ -271,10 +274,13 @@ public class HW1{
       int j = 0;
       String trimer = input.nextLine().trim().replaceAll(" +", " ");
       String[] line = trimer.split("\\s");
-      for(String num :line){
-         matrix[i][j] =  Integer.parseInt(num);
-         j++;
+      if(line.length != 1){
+        for(String num :line){
+           matrix[i][j] =  Integer.parseInt(num);
+           j++;
+        }
       }
+
     }
     input.close();
     return matrix;

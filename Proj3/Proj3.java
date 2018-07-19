@@ -11,16 +11,47 @@ public class Proj3{
       String arrayFile = args[0];
       ArrayList<Ride> rides = buildArray(arrayFile);
       bubbleSort(rides);
+      findLongestTime(rides);
       printRides(rides);
+      findRidePath(rides);
     }
     else{
       System.out.println("error:  no text file specified");
       System.exit(0);
     }
-
-
   }
 
+  public static void findRidePath(ArrayList<Ride> rides){
+    //find max
+    int max = -1;
+    for (int i = 0; i < rides.size(); i++) {
+      if(max < rides.get(i).getTotalTime()){
+        max = rides.get(i).getTotalTime();
+      }
+    }
+    int maxPrint = max;
+    ArrayList<String> rideOrder = new ArrayList<String>();
+    for(int i = rides.size()-1; i >= 0; i--){
+      if(rides.get(i).getTotalTime() == max){
+        rideOrder.add(rides.get(i).getName());
+        max -= rides.get(i).getRideTime();
+      }
+    }
+
+    //print ride path
+    System.out.println("the best ride order is: ");
+    for(int i = rideOrder.size() -1; i>=0; i--){
+      System.out.println(rideOrder.get(i));
+    }
+    System.out.println("You will spend a total of " + maxPrint + " hours on rides");
+  }
+
+
+
+
+
+
+  //you know how bubble sort works
   public static ArrayList<Ride> bubbleSort(ArrayList<Ride> rides){
     for (int i = 0; i < rides.size()-1; i++){
       for (int j = i+1; j < rides.size(); j++){
@@ -38,8 +69,16 @@ public class Proj3{
 * prints the length of the sequnce and the actual sequence
 *
 */
-  private static void findSeq(int[] seq){
-
+  public static void findLongestTime(ArrayList<Ride> rides){
+    for (int i = 0; i < rides.size()-1; i++){
+      for (int j = i+1; j < rides.size(); j++){
+        if(rides.get(i).getEnd() <= rides.get(j).getStart()){
+          if(rides.get(i).getTotalTime() + rides.get(j).getRideTime() > rides.get(j).getTotalTime()){
+            rides.get(j).setTotalTime(rides.get(i).getTotalTime() + rides.get(j).getRideTime());
+          }
+        }
+      }
+    }
   }
 
   /*printArray
@@ -49,7 +88,7 @@ public class Proj3{
   private static void printRides( ArrayList<Ride> rides){
     for (int i = 0 ; i < rides.size();i++ ) {
       Ride ride = rides.get(i);
-      System.out.println(ride.getName() + " " + ride.getStart() + ride.getEnd() + ride.getTime());
+      System.out.println(ride.getName() + " " + ride.getStart() + ride.getEnd() + ride.getRideTime() + " total time :"+ride.getTotalTime());
     }
     System.out.println();
 

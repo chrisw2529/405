@@ -12,13 +12,15 @@ public class Ride{
   String name;
   int start;
   int end;
-  int time;
+  int rideTime;
+  int totalTime;
 
   Ride(String name, int start, int end){
     this.name = name;
     this.start = start;
     this.end = end;
-    this.time = end - start;
+    this.rideTime = end - start;
+    this.totalTime = end - start;
   }
 
   public String getName(){
@@ -30,12 +32,15 @@ public class Ride{
   public int getEnd(){
     return this.end;
   }
-  public int getTime(){
-    return this.time;
+  public int getRideTime(){
+    return this.rideTime;
   }
-  public void setTime(int time){
-    if(this.time < time){
-      this.time = time;
+  public int getTotalTime(){
+    return this.totalTime;
+  }
+  public void setTotalTime(int time){
+    if(this.totalTime < time){
+      this.totalTime  = time;
     }
   }
 }

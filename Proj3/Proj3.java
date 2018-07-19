@@ -10,7 +10,7 @@ public class Proj3{
     if(args.length != 0){
       String arrayFile = args[0];
       ArrayList<Ride> rides = buildArray(arrayFile);
-      //findSeq(sequence);
+      printRides(rides);
     }
     else{
       System.out.println("error:  no text file specified");
@@ -32,9 +32,10 @@ public class Proj3{
   * helper function print the array (seq)
   *
   */
-  private static void printArray(int[] seq){
-    for (int i = 0 ; i < seq.length;i++ ) {
-      System.out.print(seq[i] + " ");
+  private static void printRides( ArrayList<Ride> rides){
+    for (int i = 0 ; i < rides.size();i++ ) {
+      Ride ride = rides.get(i);
+      System.out.println(ride.getName() + " " + ride.getStart() + ride.getEnd() + ride.getTime());
     }
     System.out.println();
 
@@ -55,15 +56,21 @@ public class Proj3{
         System.err.println("Error: Unable to open file " + file);
         System.exit(1);
     }
-
+    ArrayList<Ride> rides = new ArrayList<Ride>();
     if(input.hasNextLine()){
       String trimer = input.nextLine().trim().replaceAll(" +", " ");
       String[] line = trimer.split("\\s");
       System.out.println(Arrays.toString(line));
       for(int i = 0; i < line.length; i++){
-        String name = ///here!!
+        int colen = line[i].indexOf(':');
+        String name = line[i].substring(0, colen);
+        int comma = line[i].indexOf(',');
+        int start = Integer.parseInt(line[i].substring(colen+2, comma));
+        int pren = line[i].indexOf(')');
+        int end  = Integer.parseInt(line[i].substring(comma+1, pren));
+        rides.add(new Ride(name, start, end));
       }
-      return null;
+      return rides;
     }
     else{
       System.err.println("nothing in file: " + file);

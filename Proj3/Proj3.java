@@ -12,7 +12,7 @@ public class Proj3{
       ArrayList<Ride> rides = buildArray(arrayFile);
       bubbleSort(rides);
       findLongestTime(rides);
-      printRides(rides);
+      //printRides(rides);
       findRidePath(rides);
     }
     else{
@@ -21,8 +21,9 @@ public class Proj3{
     }
   }
 
+  //finds the best path throught all of the rides
   public static void findRidePath(ArrayList<Ride> rides){
-    //find max
+    //finds the maximum amount of time that you could spend on rides
     int max = -1;
     for (int i = 0; i < rides.size(); i++) {
       if(max < rides.get(i).getTotalTime()){
@@ -30,6 +31,8 @@ public class Proj3{
       }
     }
     int maxPrint = max;
+
+    //saves optimal ride order in ArrayList
     ArrayList<String> rideOrder = new ArrayList<String>();
     for(int i = rides.size()-1; i >= 0; i--){
       if(rides.get(i).getTotalTime() == max){
@@ -38,7 +41,7 @@ public class Proj3{
       }
     }
 
-    //print ride path
+    //print optimal ride order
     System.out.println("the best ride order is: ");
     for(int i = rideOrder.size() -1; i>=0; i--){
       System.out.println(rideOrder.get(i));
@@ -64,9 +67,8 @@ public class Proj3{
     }
     return rides;
   }
-/*findSeq
-* takes in an array and finds longest increacing subsequence
-* prints the length of the sequnce and the actual sequence
+/*findLongestTime
+* takes in an arrayList and findes the most amount of time that you could spend riding each ride plus the most optimal combination of rides before it
 *
 */
   public static void findLongestTime(ArrayList<Ride> rides){
@@ -113,7 +115,7 @@ public class Proj3{
     if(input.hasNextLine()){
       String trimer = input.nextLine().trim().replaceAll(" +", " ");
       String[] line = trimer.split("\\s");
-      System.out.println(Arrays.toString(line));
+      //System.out.println(Arrays.toString(line));
       for(int i = 0; i < line.length; i++){
         int colen = line[i].indexOf(':');
         String name = line[i].substring(0, colen);

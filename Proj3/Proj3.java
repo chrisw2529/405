@@ -10,6 +10,7 @@ public class Proj3{
     if(args.length != 0){
       String arrayFile = args[0];
       ArrayList<Ride> rides = buildArray(arrayFile);
+      bubbleSort(rides);
       printRides(rides);
     }
     else{
@@ -18,6 +19,19 @@ public class Proj3{
     }
 
 
+  }
+
+  public static ArrayList<Ride> bubbleSort(ArrayList<Ride> rides){
+    for (int i = 0; i < rides.size()-1; i++){
+      for (int j = i+1; j < rides.size(); j++){
+        if (rides.get(i).getStart() > rides.get(j).getStart()){
+          Ride temp = rides.get(i);
+          rides.set(i, rides.get(j));
+          rides.set(j, temp);
+        }
+      }
+    }
+    return rides;
   }
 /*findSeq
 * takes in an array and finds longest increacing subsequence

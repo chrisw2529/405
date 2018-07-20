@@ -25,19 +25,29 @@ public class Proj3{
   public static void findRidePath(ArrayList<Ride> rides){
     //finds the maximum amount of time that you could spend on rides
     int max = -1;
+    int maxIndex = -1;
     for (int i = 0; i < rides.size(); i++) {
       if(max < rides.get(i).getTotalTime()){
         max = rides.get(i).getTotalTime();
+        maxIndex = i;
       }
     }
     int maxPrint = max;
 
     //saves optimal ride order in ArrayList
     ArrayList<String> rideOrder = new ArrayList<String>();
+    Ride prevRide = rides.get(maxIndex);
+    rideOrder.add(prevRide.getName());
+    max -= prevRide.getRideTime();
     for(int i = rides.size()-1; i >= 0; i--){
       if(rides.get(i).getTotalTime() == max){
-        rideOrder.add(rides.get(i).getName());
-        max -= rides.get(i).getRideTime();
+        //System.out.println(rides.get(i).getName() +" "+  prevRide.getName());
+        //System.out.println(rides.get(i).getEnd() +" "+ prevRide.getStart());
+        if(rides.get(i).getEnd() <= prevRide.getStart()){
+          rideOrder.add(rides.get(i).getName());
+          max -= rides.get(i).getRideTime();
+          prevRide = rides.get(i);
+        }
       }
     }
 
@@ -77,6 +87,7 @@ public class Proj3{
         if(rides.get(i).getEnd() <= rides.get(j).getStart()){
           if(rides.get(i).getTotalTime() + rides.get(j).getRideTime() > rides.get(j).getTotalTime()){
             rides.get(j).setTotalTime(rides.get(i).getTotalTime() + rides.get(j).getRideTime());
+
           }
         }
       }
